@@ -37,8 +37,20 @@ pieces.push({ image: "assets/images/queen_w.png", x: 0, y: 3 })
 pieces.push({ image: "assets/images/king_b.png", x: 7, y: 4 })
 pieces.push({ image: "assets/images/king_w.png", x: 0, y: 4 })
 
+
 export default function Chessboard(){
     let board = [];
+
+    function grabPieces(e : React.MouseEvent){
+        const element = e.target as HTMLElement;
+        if(element.classList.contains("chess-piece")){
+            const x = e.clientX - 50;
+            const y = e.clientY - 50;
+            element.style.position = "absolute";
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+        }
+    }
     
     for(let i=verticalAxis.length-1;i>=0;i--){
         for(let j=0;j<horizontalAxis.length;j++){
@@ -48,9 +60,9 @@ export default function Chessboard(){
                 if(p.x === i && p.y === j)
                     image = p.image;
             })
-            board.push(<Tile image={image} number={number}></Tile>);
+            board.push(<Tile key={`${j},${i}`} image={image} number={number}></Tile>);
         } 
     }
 
-    return (<div id='chessboard'>{board}</div>)
+    return (<div onMouseDown={(e) => grabPieces(e)} id='chessboard'>{board}</div>)
 }
