@@ -2,10 +2,13 @@ package com.example.backend.services;
 
 import com.example.backend.constants.Constants;
 import com.example.backend.models.Game;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +24,10 @@ public class GameManager {
         users.remove(session);
     }
 
-    public void handleMessage(WebSocketSession session, TextMessage message){
-        if(message.getPayload().equals(Constants.INIT_GAME)){
+    public void handleMessage(WebSocketSession session, TextMessage message) throws IOException {
+        JsonObject jsonPayLoadFromMessage = JsonParser.parseString(message.getPayload()).getAsJsonObject();
+
+        if(jsonPayLoadFromMessage.get(Constants.TYPE).getAsString().equals(Constants.INIT_GAME)){
             if(pendingUser == null)
                 pendingUser = session;
             else {
@@ -30,7 +35,7 @@ public class GameManager {
                 games.add(newGame);
                 pendingUser = null;
             }
-        }else if(message.getPayload().equals(Constants.MOVE)){
+        }else if(jsonPayLoadFromMessage.get(Constants.TYPE).getAsString().equals(Constants.MOVE)){
             Game currentGame = null;
             for(Game game : games){
                 if(game.getPlayer1() == session || game.getPlayer2() == session){
