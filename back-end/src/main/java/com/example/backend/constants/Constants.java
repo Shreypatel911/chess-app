@@ -8,4 +8,6 @@ public class Constants {
     public static String COLOR = "color";
     public static String BLACK = "black";
     public static String WHITE = "white";
+    public static String FROM = "from";
+    public static String TO = "to";
 }

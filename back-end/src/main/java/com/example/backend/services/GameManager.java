@@ -45,7 +45,7 @@ public class GameManager {
             }
 
             if(currentGame != null){
-                currentGame.makeMove(message);
+                currentGame.makeMove(jsonPayLoadFromMessage);
             }
         }
     }
