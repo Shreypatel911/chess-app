@@ -123,10 +123,16 @@ public class Game {
         String to = message.get(Constants.TO).getAsString();
         Move currentMove = new Move(moveToSquare.get(from), moveToSquare.get(to));
 
-        boolean isMoveValid = this.board.doMove(currentMove, true);
-        if(!isMoveValid){
-            System.out.println("Move is not valid");
-            return ;
+        try{
+            boolean isMoveValid = this.board.doMove(currentMove, true);
+            if(!isMoveValid){
+                System.out.println("Move is not valid");
+                return ;
+            }
+            System.out.println(isMoveValid);
+            System.out.println(this.board.toString());
+        }catch (Exception e){
+            System.out.println("Illegal move: " + e.getMessage());
         }
     }
 }
