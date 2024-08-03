@@ -5,16 +5,14 @@ import { Landing } from './screens/Landing'
 
 function App() {
 
-  return (
-    <>
-      <BrowserRouter>
+  return (<div className='h-screen bg-slate-900'>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing/>}/>
-        <Route path="/game" element={<Game/>}/>
+        <Route path="/" element={<Landing />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
-      </BrowserRouter>
-    </>
-  )
+    </BrowserRouter>
+  </div>)
 }
 
 export default App
